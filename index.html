@@ -43,8 +43,47 @@
 
   gtag('config', 'G-3LQQ675VSV');
 </script>
+
+
 </head>
 
+<!-- EmailJS SDK -->
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+
+<script>
+  // Initialize EmailJS with your public key
+  (function() {
+    emailjs.init("hhZqwq8cFbKwWDZ_f"); // Replace with your PUBLIC KEY
+  })();
+
+  function sendEmail(e) {
+    e.preventDefault();
+
+    const loading = document.querySelector('.loading');
+    const errorMessage = document.querySelector('.error-mess');
+    const sentMessage = document.querySelector('.sent-message');
+
+    // Show loading
+    loading.style.display = 'block';
+    errorMessage.style.display = 'none';
+    sentMessage.style.display = 'none';
+
+    // Send form using EmailJS
+    emailjs.sendForm('service_fl0cgco', 'template_jvbev1w', '#contact-form', 'hhZqwq8cFbKwWDZ_f')
+      .then(() => {
+        loading.style.display = 'none';
+        sentMessage.style.display = 'block';
+        document.getElementById('contact-form').reset();
+      }, (error) => {
+        loading.style.display = 'none';
+        errorMessage.style.display = 'block';
+        errorMessage.innerHTML = 'Something went wrong. Please try again later.';
+        console.error('EmailJS Error:', error);
+      });
+  }
+</script>
 <body class="index-page">
 
   <header id="header" class="header d-flex align-items-center fixed-top">
@@ -721,8 +760,10 @@ Here are some of the roles and projects I've handled over the years, where I app
       <!-- Section Title -->
       <div class="container section-title">
         <h2>Contact</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
+        <p>
+          Feel free to reach out for collaborations, project inquiries, or any questions.
+        </p>
+        </div><!-- End Section Title -->
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
@@ -730,16 +771,16 @@ Here are some of the roles and projects I've handled over the years, where I app
           <div class="col-lg-5">
             <div class="info-box" data-aos="fade-up" data-aos-delay="200">
               <h3>Contact Info</h3>
-              <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ante ipsum primis.</p>
+              <p></p>
 
               <div class="info-item" data-aos="fade-up" data-aos-delay="300">
                 <div class="icon-box">
                   <i class="bi bi-geo-alt"></i>
                 </div>
                 <div class="content">
-                  <h4>Our Location</h4>
-                  <p>A108 Adam Street</p>
-                  <p>New York, NY 535022</p>
+                  <h4>Location</h4>
+                  <p>Trece Martires City, Cavite 4109</p>
+                  <p>Philippines</p>
                 </div>
               </div>
 
@@ -749,8 +790,8 @@ Here are some of the roles and projects I've handled over the years, where I app
                 </div>
                 <div class="content">
                   <h4>Phone Number</h4>
-                  <p>+1 5589 55488 55</p>
-                  <p>+1 6678 254445 41</p>
+                  <p>+63 992 3720 006</p>
+                  <p>+63 976 3062 981</p>
                 </div>
               </div>
 
@@ -760,8 +801,7 @@ Here are some of the roles and projects I've handled over the years, where I app
                 </div>
                 <div class="content">
                   <h4>Email Address</h4>
-                  <p>info@example.com</p>
-                  <p>contact@example.com</p>
+                  <p>mchll.vllvll@gmail.com</p>
                 </div>
               </div>
             </div>
@@ -772,7 +812,7 @@ Here are some of the roles and projects I've handled over the years, where I app
               <h3>Get In Touch</h3>
               <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ante ipsum primis.</p>
 
-              <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+              <form id="contact-form" onsubmit="sendEmail(event)" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
                 <div class="row gy-4">
 
                   <div class="col-md-6">
@@ -793,9 +833,8 @@ Here are some of the roles and projects I've handled over the years, where I app
 
                   <div class="col-12 text-center">
                     <div class="loading">Loading</div>
-                    <div class="error-message"></div>
                     <div class="sent-message">Your message has been sent. Thank you!</div>
-
+                    <div class="error-mess"></div>
                     <button type="submit" class="btn">Send Message</button>
                   </div>
 
